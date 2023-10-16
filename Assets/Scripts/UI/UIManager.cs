@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum UI { Initial, Main, Data, Setting };
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public UI _UIState
+	{
+		get
+		{
+			return UIState;
+		}
+		set
+		{
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+			//변경 전 UICanvas Off
+
+			UIState = value;
+
+			//변경 후 UICanvas On
+			
+		}
+	}
+	private UI UIState = UI.Initial;
+
+	[SerializeField]
+	private List<GameObject> PanelList = new List<GameObject>(); 
+	
+
+
 }
