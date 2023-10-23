@@ -5,6 +5,19 @@ using UnityEngine;
 public enum UI { Initial = 1, Main, Data, Setting };
 public class UIManager : MonoBehaviour
 {
+	private bool AlwaysUIEnabled;
+	public bool _AlwaysUIEnabled
+	{
+		get
+		{
+			return AlwaysUIEnabled;
+		}
+		set
+		{
+			AlwaysUIEnabled = value;
+			DebugSection.SetActive(AlwaysUIEnabled);
+		}
+	}
 	public UI _UIState
 	{
 		get
@@ -23,7 +36,7 @@ public class UIManager : MonoBehaviour
 
 			//º¯°æ ÈÄ UIPanel On
 			EnablePanel(PanelList[(int)UIState]);
-			_DebugPanelScript.CurrentUI.text = _DebugPanelScript.defaultCurrentUIString +  _UIState.ToString();
+			_DebugSectionScript.CurrentUI.text = _DebugSectionScript.defaultCurrentUIString + _UIState.ToString();
 		}
 	}
 	private UI UIState = UI.Initial;
@@ -31,11 +44,12 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> PanelList = new List<GameObject>();
 
-	private DebugPanel _DebugPanelScript;
+	public GameObject DebugSection;
+	private DebugPanel _DebugSectionScript;
 
 	private void Start()
 	{
-		_DebugPanelScript = GameObject.Find("DebugPanel").GetComponent<DebugPanel>();
+		_DebugSectionScript = DebugSection.GetComponent<DebugPanel>();
 	}
 
 	public void DisablePanel(GameObject panel)
