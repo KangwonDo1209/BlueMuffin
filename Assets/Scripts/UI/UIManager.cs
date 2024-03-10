@@ -5,19 +5,20 @@ using UnityEngine;
 public enum UI { Initial = 1, Main, Data, Setting };
 public class UIManager : MonoBehaviour
 {
-	private bool AlwaysUIEnabled;
-	public bool _AlwaysUIEnabled
+	private bool DebugUIEnabled;
+	public bool _DebugUIEnabled
 	{
 		get
 		{
-			return AlwaysUIEnabled;
+			return DebugUIEnabled;
 		}
 		set
 		{
-			AlwaysUIEnabled = value;
-			DebugSection.SetActive(AlwaysUIEnabled);
+			DebugUIEnabled = value;
+			DebugSection.SetActive(DebugUIEnabled);
 		}
 	}
+	private UI UIState = UI.Initial;
 	public UI _UIState
 	{
 		get
@@ -26,11 +27,11 @@ public class UIManager : MonoBehaviour
 		}
 		set
 		{
+			//변경 전 UIPanel Off
 			for (int i = 1; i < PanelList.Count; i++)
 			{
 				DisablePanel(PanelList[i]);
 			}
-			//변경 전 UIPanel Off
 
 			UIState = value;
 
@@ -39,17 +40,22 @@ public class UIManager : MonoBehaviour
 			_DebugSectionScript.CurrentUI.text = _DebugSectionScript.defaultCurrentUIString + _UIState.ToString();
 		}
 	}
-	private UI UIState = UI.Initial;
+
 
 	[SerializeField]
 	private List<GameObject> PanelList = new List<GameObject>();
-
 	public GameObject DebugSection;
+
 	private DebugPanel _DebugSectionScript;
+
+	private void Awake()
+	{
+		_DebugSectionScript = DebugSection.GetComponent<DebugPanel>();
+	}
 
 	private void Start()
 	{
-		_DebugSectionScript = DebugSection.GetComponent<DebugPanel>();
+		_UIState = UI.Initial;
 	}
 
 	public void DisablePanel(GameObject panel)
