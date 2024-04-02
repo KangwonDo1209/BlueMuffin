@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UI { Initial = 1, Main, Data, Setting };
+public enum UIPage { Initial = 1, Main, Data, Setting };
 public class UIManager : MonoBehaviour
 {
-	private bool DebugUIEnabled;
-	public bool _DebugUIEnabled
+	private bool DebugPanelEnabled;
+	public bool _DebugPanelEnabled
 	{
 		get
 		{
-			return DebugUIEnabled;
+			return DebugPanelEnabled;
 		}
 		set
 		{
-			DebugUIEnabled = value;
-			DebugSection.SetActive(DebugUIEnabled);
+			DebugPanelEnabled = value;
+			DebugSection.SetActive(DebugPanelEnabled);
 		}
 	}
-	private UI UIState = UI.Initial;
-	public UI _UIState
+	private UIPage UIState = UIPage.Initial;
+	public UIPage _UIState
 	{
 		get
 		{
@@ -28,22 +28,22 @@ public class UIManager : MonoBehaviour
 		set
 		{
 			//변경 전 UIPanel Off
-			for (int i = 1; i < PanelList.Count; i++)
+			for (int i = 1; i < PageList.Count; i++)
 			{
-				DisablePanel(PanelList[i]);
+				DisablePanel(PageList[i]);
 			}
 
 			UIState = value;
 
 			//변경 후 UIPanel On
-			EnablePanel(PanelList[(int)UIState]);
+			EnablePanel(PageList[(int)UIState]);
 			_DebugSectionScript.CurrentUI.text = _DebugSectionScript.defaultCurrentUIString + _UIState.ToString();
 		}
 	}
 
 
 	[SerializeField]
-	private List<GameObject> PanelList = new List<GameObject>();
+	private List<GameObject> PageList = new List<GameObject>();
 	public GameObject DebugSection;
 
 	private DebugPanel _DebugSectionScript;
@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
 
 	private void Start()
 	{
-		_UIState = UI.Initial;
+		_UIState = UIPage.Initial;
 	}
 
 	public void DisablePanel(GameObject panel)
@@ -68,6 +68,6 @@ public class UIManager : MonoBehaviour
 	}
 	public void ChangePanel(int index)
 	{
-		_UIState = (UI)index;
+		_UIState = (UIPage)index;
 	}
 }
