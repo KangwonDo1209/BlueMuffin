@@ -12,45 +12,33 @@ using TMPro;
 
 public class WebManager : MonoBehaviour
 {
-	public TMPro.TMP_InputField urlField;
+	public TMP_InputField urlField;
 	[SerializeField]
 	private string url;
 
 	private WebData<TempData> WebData = new WebData<TempData>();
-	
 
-
-	public void PressUrlButton()
+	public void RequestToFieldUrl() 
 	{
 		url = urlField.text;
-		StartCoroutine(InputUrl(url));
+		StartCoroutine(WebData.Request(url));
 	}
 
-
-	private IEnumerator InputUrl(string url)
+	public void DebugData() // 데이터 출력 디버깅용 메소드
 	{
-		this.url = url;
-
-
-		StartCoroutine(WebData.Request(url));
-
-		yield return new WaitForSeconds(0.5f);
-
 		foreach (TempData data in WebData.DataList)
 		{
-			Debug.Log(data.id + " : "+ data.name);
+			Debug.Log(data.id + " : " + data.name);
 		}
 	}
-
-
-
 }
 
 public class WebData<T>
 {
-	public List<T> DataList = null;
+	// 데이터 리스트
+	public List<T> DataList = new List<T>();
 
-	
+	// 데이터 요청
 	public IEnumerator Request(string url)
 	{
 		using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
@@ -61,26 +49,26 @@ public class WebData<T>
 			// 요청이 완료되었는지 확인
 			if (webRequest.result != UnityWebRequest.Result.Success)
 			{
-				// 에러 처리
+				// 에러 출력
 				Debug.LogError("Error: " + webRequest.error);
 			}
 			else
 			{
-				// 요청이 성공한 경우 응답 받기
+				// 요청 성공시 역직렬화하여 리스트에 저장
 				string responseText = webRequest.downloadHandler.text;
 				Debug.Log(responseText);
-				DataList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(responseText);
+				DataList = JsonConvert.DeserializeObject<List<T>>(responseText);
 
+				// 데이터 수신 확인
 				Debug.Log($"데이터 {DataList.Count}개 수신 완료!");
-				// 여기서 응답 데이터를 처리할 수 있습니다.
-
+				
 			}
 		}
 	}
 
 }
 
-public class TempData
+public class TempData // 테스트용 클래스
 {
 	public int postId;
 	public int id;
@@ -89,11 +77,10 @@ public class TempData
 	public string body;
 }
 
-public class EnviromentData
+public class EnviromentData // (미완) 데이터 클래스
 {
 	public string Time;
 	public float Temperature;
 	public float Humidity;
 	public bool IsDangerous;
-
 }
