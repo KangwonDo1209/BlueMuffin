@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Chapter.Singleton;
 
 public enum UIPage { Initial = 1, Main, Data, Setting };
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
 	private bool DebugPanelEnabled;
 	public bool _DebugPanelEnabled
@@ -48,8 +49,9 @@ public class UIManager : MonoBehaviour
 
 	private DebugPanel _DebugSectionScript;
 
-	private void Awake()
+	public override void Awake()
 	{
+		base.Awake();
 		_DebugSectionScript = DebugSection.GetComponent<DebugPanel>();
 	}
 
