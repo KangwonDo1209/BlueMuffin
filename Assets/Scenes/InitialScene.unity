@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 109498700}
   - component: {fileID: 109498699}
   m_Layer: 5
-  m_Name: SettingPanel (1)
+  m_Name: AlarmPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -617,7 +617,15 @@ PrefabInstance:
       objectReference: {fileID: 1581248025}
     - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangePanel
+      value: ChangeUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIChange, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7386963553531995543, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_Name
@@ -641,7 +649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchorMin.x
@@ -649,11 +657,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 480
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_SizeDelta.y
@@ -689,11 +697,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 330
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -505
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1600,6 +1608,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc13a07a44d164840b040d0931bcb2bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIList:
+  - {fileID: 2073991572}
+  - {fileID: 109498697}
+  - {fileID: 460480596}
+  - {fileID: 1246169533}
 --- !u!1 &460480596
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,7 +1626,7 @@ GameObject:
   - component: {fileID: 460480599}
   - component: {fileID: 460480598}
   m_Layer: 5
-  m_Name: SettingPanel (2)
+  m_Name: StatisticPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2658,7 +2671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -628.98645}
+  m_AnchoredPosition: {x: 300, y: -592.5}
   m_SizeDelta: {x: 480, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &643909102
@@ -2706,13 +2719,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1581248025}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ChangePanel
+        m_TargetAssemblyTypeName: UIChange, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2927,7 +2940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -868.581}
+  m_AnchoredPosition: {x: 300, y: -817.5}
   m_SizeDelta: {x: 480, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &741384624
@@ -3318,7 +3331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -149.79729}
+  m_AnchoredPosition: {x: 300, y: -142.5}
   m_SizeDelta: {x: 480, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &836212003
@@ -3366,13 +3379,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1581248025}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ChangePanel
+        m_TargetAssemblyTypeName: UIChange, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3499,14 +3512,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 451625898}
+        m_TargetAssemblyTypeName: UIChange, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3633,14 +3646,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 451625898}
+        m_TargetAssemblyTypeName: UIChange, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4246,7 +4259,7 @@ GameObject:
   - component: {fileID: 1246169536}
   - component: {fileID: 1246169535}
   m_Layer: 5
-  m_Name: SettingPanel (3)
+  m_Name: OtherPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4483,7 +4496,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 370, y: -466.1261}
+  m_AnchoredPosition: {x: 370, y: -446.6667}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1266481891
@@ -5228,7 +5241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -389.39185}
+  m_AnchoredPosition: {x: 300, y: -367.5}
   m_SizeDelta: {x: 480, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1397269680
@@ -5276,13 +5289,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1581248025}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ChangePanel
+        m_TargetAssemblyTypeName: UIChange, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6177,8 +6190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a02afd2e1c0584bbfe7de5003662f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PageList:
-  - {fileID: 151346609}
+  UIList:
   - {fileID: 2020765293}
   - {fileID: 1441985698}
   - {fileID: 1303933316}
@@ -6197,7 +6209,7 @@ GameObject:
   - component: {fileID: 1607350757}
   - component: {fileID: 1607350756}
   m_Layer: 5
-  m_Name: OthersButton
+  m_Name: OtherButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6268,14 +6280,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 451625898}
+        m_TargetAssemblyTypeName: UIChange, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -6488,7 +6500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 370, y: -752.2522}
+  m_AnchoredPosition: {x: 370, y: -713.3334}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1706646443
@@ -7392,9 +7404,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 451625898}
+        m_TargetAssemblyTypeName: UIChange, Assembly-CSharp
+        m_MethodName: ChangeUI
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7661,7 +7673,15 @@ PrefabInstance:
       objectReference: {fileID: 1581248025}
     - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangePanel
+      value: ChangeUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIChange, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7386963553531995543, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_Name
@@ -7685,7 +7705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchorMin.x
@@ -7693,7 +7713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_SizeDelta.x
@@ -7733,11 +7753,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 330
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -540
       objectReference: {fileID: 0}
     - target: {fileID: 7822113003176064818, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7853,7 +7873,7 @@ GameObject:
   - component: {fileID: 2073991575}
   - component: {fileID: 2073991574}
   m_Layer: 5
-  m_Name: SettingPanel
+  m_Name: ConnectionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8137,6 +8157,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1581248025}
+    - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIChange, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455648383718403700, guid: b7ee1456615218a47b222371269c4545, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7386963553531995543, guid: b7ee1456615218a47b222371269c4545, type: 3}
       propertyPath: m_Name
       value: BackButton

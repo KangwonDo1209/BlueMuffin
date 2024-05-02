@@ -21,7 +21,7 @@ public class WebData<T>
 			if (webRequest.result != UnityWebRequest.Result.Success)
 			{
 				// 에러 출력
-				Debug.LogError("Error: " + webRequest.error);
+				Debug.LogError("Error : " + webRequest.error);
 			}
 			else
 			{
