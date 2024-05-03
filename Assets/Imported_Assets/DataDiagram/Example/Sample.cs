@@ -2,99 +2,113 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sample : MonoBehaviour {
+public class Sample : MonoBehaviour
+{
 
-    List<GameObject> lineList = new List<GameObject>();
+	List<GameObject> lineList = new List<GameObject>();
 
-    private DD_DataDiagram m_DataDiagram;
-    //private RectTransform DDrect;
+	private DD_DataDiagram m_DataDiagram;
+	//private RectTransform DDrect;
 
-    private bool m_IsContinueInput = false;
-    private float m_Input = 0f;
-    private float h = 0;
+	private bool m_IsContinueInput = false;
+	private float m_Input = 0f;
+	private float h = 0;
 
-    void AddALine() {
+	void AddALine()
+	{
 
-        if (null == m_DataDiagram)
-            return;
+		if (null == m_DataDiagram)
+			return;
 
-        Color color = Color.HSVToRGB((h += 0.1f) > 1 ? (h - 1) : h, 0.8f, 0.8f);
-        GameObject line = m_DataDiagram.AddLine(color.ToString(), color);
-        if (null != line)
-            lineList.Add(line);
-    }
+		Color color = Color.HSVToRGB((h += 0.1f) > 1 ? (h - 1) : h, 0.8f, 0.8f);
+		GameObject line = m_DataDiagram.AddLine(color.ToString(), color);
+		if (null != line)
+			lineList.Add(line);
+	}
 
-    // Use this for initialization
-    void Start () {
+	// Use this for initialization
+	void Start()
+	{
 
-        GameObject dd = GameObject.Find("DataDiagram");
-        if(null == dd) {
-            Debug.LogWarning("can not find a gameobject of DataDiagram");
-            return;
-        }
-        m_DataDiagram = dd.GetComponent<DD_DataDiagram>();
+		GameObject dd = GameObject.Find("DataDiagram");
+		if (null == dd)
+		{
+			Debug.LogWarning("can not find a gameobject of DataDiagram");
+			return;
+		}
+		m_DataDiagram = dd.GetComponent<DD_DataDiagram>();
 
-        m_DataDiagram.PreDestroyLineEvent += (s, e) => { lineList.Remove(e.line); };
+		m_DataDiagram.PreDestroyLineEvent += (s, e) => { lineList.Remove(e.line); };
 
-        AddALine();
-    }
+		AddALine();
+	}
 
-    // Update is called once per frame
-    void Update () {
+	// Update is called once per frame
+	void Update()
+	{
 
-    }
+	}
 
-    private void FixedUpdate() {
+	private void FixedUpdate()
+	{
 
-        m_Input += Time.deltaTime;
-        ContinueInput(m_Input);
-    }
+		m_Input += Time.deltaTime;
+		ContinueInput(m_Input);
 
-    private void ContinueInput(float f) {
+	}
 
-        if (null == m_DataDiagram)
-            return;
+	private void ContinueInput(float f)
+	{
 
-        if (false == m_IsContinueInput)
-            return;
+		if (null == m_DataDiagram)
+			return;
 
-        float d = 0f;
-        foreach (GameObject l in lineList) {
-            m_DataDiagram.InputPoint(l, new Vector2(0.1f,
-                (Mathf.Sin(f + d) + 1f) * 2f));
-            d += 1f;
-        }
-    }
+		if (false == m_IsContinueInput)
+			return;
 
-    public void onButton() {
+		float d = 0f;
+		foreach (GameObject l in lineList)
+		{
+			m_DataDiagram.InputPoint(l, new Vector2(0.1f,
+				(Mathf.Sin(f + d) + 1f) * 2f));
+			d += 1f;
+		}
+	}
 
-        if (null == m_DataDiagram)
-            return;
+	public void onButton()
+	{
 
-        foreach (GameObject l in lineList) {
-            m_DataDiagram.InputPoint(l, new Vector2(1, Random.value * 4f));
-        }
-    }
+		if (null == m_DataDiagram)
+			return;
 
-    public void OnAddLine() {
-        AddALine();
-    }
+		foreach (GameObject l in lineList)
+		{
+			m_DataDiagram.InputPoint(l, new Vector2(1, Random.value * 4f));
+		}
+	}
 
-    public void OnRectChange() {
+	public void OnAddLine()
+	{
+		AddALine();
+	}
 
-        if (null == m_DataDiagram)
-            return;
+	public void OnRectChange()
+	{
 
-        Rect rect = new Rect(Random.value * Screen.width, Random.value * Screen.height,
-            Random.value * Screen.width / 2, Random.value * Screen.height / 2);
+		if (null == m_DataDiagram)
+			return;
 
-        m_DataDiagram.rect = rect;
-    }
+		Rect rect = new Rect(Random.value * Screen.width, Random.value * Screen.height,
+			Random.value * Screen.width / 2, Random.value * Screen.height / 2);
 
-    public void OnContinueInput() {
+		m_DataDiagram.rect = rect;
+	}
 
-        m_IsContinueInput = !m_IsContinueInput;
+	public void OnContinueInput()
+	{
 
-    }
+		m_IsContinueInput = !m_IsContinueInput;
+
+	}
 
 }

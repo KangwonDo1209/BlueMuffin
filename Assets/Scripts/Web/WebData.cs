@@ -6,8 +6,8 @@ using Newtonsoft.Json;
 
 public class WebData<T>
 {
-	// 데이터 리스트
 	public List<T> DataList = new List<T>();
+
 
 	// 데이터 요청
 	public IEnumerator Request(string url)

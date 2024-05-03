@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using JetBrains.Annotations;
 using TMPro;
 using Chapter.Singleton;
-
+// using System.Data.SqlClient;
 
 public class WebManager : Chapter.Singleton.Singleton<WebManager>
 {
@@ -19,6 +19,7 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 	public override void Awake()
 	{
 		base.Awake();
+		
 	}
 
 	public void RequestToFieldUrl() 
@@ -27,7 +28,7 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 		StartCoroutine(WebData.Request(url));
 	}
 
-	public void DebugData() // 데이터 출력 디버깅용 메소드
+	public void DebugAllData() // 데이터 출력 디버깅용 메소드
 	{
 		foreach (TempData data in WebData.DataList)
 		{
