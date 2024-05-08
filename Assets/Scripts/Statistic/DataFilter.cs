@@ -19,23 +19,27 @@ public class DataFilter : MonoBehaviour
 
 	void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Y))
+			Debug.Log(dataList.Count + "리스트");
 		if (Input.GetKeyDown(KeyCode.V))
 		{
 			for (int i = 18000; i >= 0; i--)
 			{
 				dataList.Add(new EnviromentData
 				{
-					Time = DateTime.Now.AddMinutes(-i),
+					Time = EnviromentData.ParseTime(DateTime.Now.AddMinutes(-i)),
+					RoomId = UnityEngine.Random.Range(1, 5),
 					Temperature = (float)UnityEngine.Random.Range(5, 25),
 					Humidity = (float)UnityEngine.Random.Range(10, 80),
-					IsDangerous = false
+					Gas = (float)UnityEngine.Random.Range(10, 60),
+					Dust = (float)UnityEngine.Random.Range(5, 60),
+					DangerCode = UnityEngine.Random.Range(0, 40)
 				});
 			}
 
 			var list = DataProcessor.GetRecentData(dataList, 3000);
-			string type = "Temperature";
-			float avg = DataProcessor.CalculateDataAverage(list, type);
-			Debug.Log(list.Count + " - " + type + " : " + avg);
+			EnviromentData avg = DataProcessor.CalculateDataAverage(list);
+			Debug.Log(list.Count + " : " + avg.DataDisplay());
 		}
 	}
 }
@@ -50,52 +54,51 @@ public class DataProcessor
 		List<EnviromentData> recentData = dataList.Where(data =>
 		{
 			// 시간차 확인 후 
-			TimeSpan timeDiff = currentTime - data.Time;
+			TimeSpan timeDiff = currentTime - EnviromentData.ParseTime(data.Time);
 			return (timeDiff.TotalMinutes) <= minute;
 		}).ToList();
 
 		return recentData;
 	}
 	// 리스트의 특정 속성 평균값을 반환.
-	public static float CalculateDataAverage(List<EnviromentData> dataList, string fieldName)
+	public static EnviromentData CalculateDataAverage(List<EnviromentData> dataList)
 	{
 		if (dataList.Count == 0)
+			return new EnviromentData();
+
+		float totalTemperature = 0;
+		float totalHumidity = 0;
+		float totalGas = 0;
+		float totalDust = 0;
+		int totalDangerCode = 0;
+		int count = dataList.Count;
+
+		foreach (EnviromentData data in dataList)
 		{
-			return float.MinValue;
+			totalTemperature += data.Temperature;
+			totalHumidity += data.Humidity;
+			totalGas += data.Gas;
+			totalDust += data.Dust;
+			totalDangerCode += data.DangerCode;
 		}
-		float sum = 0;
+		float averageTemperature = totalTemperature / count;
+		float averageHumidity = totalHumidity / count;
+		float averageGas = totalGas / count;
+		float averageDust = totalDust / count;
+		int averageDangerCode = totalDangerCode / count;
 
-
-		switch (fieldName.ToLower())
+		EnviromentData averageData = new EnviromentData
 		{
-			case "temperature":
-				foreach (var item in dataList)
-				{
-					sum += item.Temperature;
-				}
-				break;
-			case "humidity":
-				foreach (var item in dataList)
-				{
-					sum += item.Humidity;
-				}
-				break;
-			case "isdangerous":
-				foreach (var item in dataList)
-				{
-					if (item.IsDangerous)
-						sum += 1f;
-				}
-				break;
-			default:
-				Debug.Log(fieldName.ToLower() + " is Not Field");
-				return float.MinValue;
-		}
+			Time = "Average",
+			RoomId = 0,
+			Temperature = averageTemperature,
+			Humidity = averageHumidity,
+			Gas = averageGas,
+			Dust = averageDust,
+			DangerCode = averageDangerCode
+		};
 
-		float average = sum / dataList.Count;
-
-		return average;
+		return averageData;
 	}
-
 
 }
