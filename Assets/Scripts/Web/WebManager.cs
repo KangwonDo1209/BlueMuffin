@@ -19,8 +19,8 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 	public string EnviromentDataPath;
 	public string SensorDataPath;
 
-	private WebData<TempData> WebEnviromentData = new WebData<TempData>();
-	private WebData<RoomSensorData> WebRoomSensorData = new WebData<RoomSensorData>();
+	public WebData<EnvironmentData> WebEnviromentData = new WebData<EnvironmentData>();
+	public WebData<RoomSensorData> WebRoomSensorData = new WebData<RoomSensorData>();
 	public override void Awake()
 	{
 		base.Awake();
@@ -29,7 +29,7 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 
 	public void RequestToFieldUrl()
 	{
-		url = urlField.text;	// 입력 URL
+		url = urlField.text;    // 입력 URL
 
 		// 세부 경로 설정
 		EnviromentDataUrl = url + EnviromentDataUrl;
@@ -42,9 +42,22 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 
 	public void DebugAllData() // 데이터 출력 디버깅용 메소드
 	{
-		foreach (TempData data in WebEnviromentData.DataList)
+		foreach (EnvironmentData data in WebEnviromentData.DataList)
 		{
-			Debug.Log(data.id + " : " + data.name);
+			Debug.Log(CombineDataString(data));
 		}
+	}
+	public string CombineDataString(EnvironmentData data)
+	{
+		string str = "";
+		string s = " / ";
+		str += data.Time + s;
+		str += data.RoomId + s;
+		str += data.Temperature + s;
+		str += data.Humidity + s;
+		str += data.Gas + s;
+		str += data.Dust + s;
+		str += data.DangerCode + s;
+		return str;
 	}
 }

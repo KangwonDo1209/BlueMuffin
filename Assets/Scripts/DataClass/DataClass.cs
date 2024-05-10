@@ -9,7 +9,7 @@ public class TempData // 테스트용 클래스
 	public string body;
 }
 
-public class EnviromentData // (미완) 데이터 클래스
+public class EnvironmentData
 {
 	public string Time;
 	public int RoomId;
@@ -17,7 +17,7 @@ public class EnviromentData // (미완) 데이터 클래스
 	public float Humidity;
 	public float Gas;
 	public float Dust;
-	public int DangerCode;
+	public string DangerCode;
 
 
 	public static DateTime ParseTime(string iso8601Time)
@@ -39,7 +39,8 @@ public class EnviromentData // (미완) 데이터 클래스
 public class RoomSensorData
 {
 	public int RoomIndex;
-	public int SensorCode;
+	public string RoomName;
+	public string SensorCode;
 
 	// 센서 코드 해석 메소드
 }
