@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class DataFilter : MonoBehaviour
 {
+	public bool PeriodicGenerating = false;
+	Coroutine GenerateCouroutine;
 
 	List<EnvironmentData> dataList;
 	List<RoomSensorData> sensorDataList;
@@ -26,11 +28,35 @@ public class DataFilter : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Y))
-			Debug.Log(dataList.Count + "리스트");
-		if (Input.GetKeyDown(KeyCode.V))
+
+	}
+
+	#region 테스트용 랜덤 데이터
+	public void PeriodicRandomDat(string min_sec)    // 랜덤 데이터 생성
+	{
+		int[] parse = Array.ConvertAll(min_sec.Split(" "), int.Parse);
+		int min = parse[0];
+		int periodSec = parse[1];
+		if (PeriodicGenerating)
 		{
-			for (int i = 3600; i >= 0; i--)
+			StopCoroutine(GenerateCouroutine);
+			PeriodicGenerating = false;
+		}
+		else
+		{
+			GenerateCouroutine = StartCoroutine(RandomData(min, periodSec));
+			PeriodicGenerating = true;
+		}
+
+	}
+
+	public IEnumerator RandomData(int min, int periodSec)
+	{
+		while (true)
+		{
+			WebManager.Instance.WebEnviromentData.DataList = new List<EnvironmentData>();
+			dataList = WebManager.Instance.WebEnviromentData.DataList;
+			for (int i = min; i >= 0; i--)
 			{
 				dataList.Add(new EnvironmentData
 				{
@@ -43,12 +69,12 @@ public class DataFilter : MonoBehaviour
 					DangerCode = "0000"
 				});
 			}
-
-			var list = DataProcessor.GetRecentData(dataList, 1, 30);
-			EnvironmentData avg = DataProcessor.CalculateDataAverage(list, 1);
-			Debug.Log(list.Count + " : " + avg.DataDisplay());
+			Debug.Log("Random!");
+			yield return new WaitForSeconds(periodSec);
 		}
-	}
+	} 
+	#endregion
+
 }
 
 public class DataProcessor
@@ -91,7 +117,7 @@ public class DataProcessor
 		float averageGas = totalGas / count;
 		float averageDust = totalDust / count;
 
-
+		// 표시를 위한 최근 평균 데이터
 		EnvironmentData averageData = new EnvironmentData
 		{
 			Time = "Average", // 임시
@@ -105,5 +131,7 @@ public class DataProcessor
 
 		return averageData;
 	}
+
+
 
 }

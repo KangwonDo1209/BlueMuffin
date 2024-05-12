@@ -38,10 +38,10 @@ public class InteractRoom : Singleton<InteractRoom>
 		{
 			return data.RoomIndex == roomIndex;
 		}).RoomName;
-		TextList[1].text = $"온도 : {averageData.Temperature.ToString()} °C";
-		TextList[2].text = $"습도 : {averageData.Humidity.ToString()} %";
-		TextList[3].text = $"가스 : {averageData.Gas.ToString()} ppm";
-		TextList[4].text = $"미세먼지 : {averageData.Dust.ToString()} ㎍/㎥";
+		TextList[1].text = $"온도 : {averageData.Temperature.ToString("N2")} °C";
+		TextList[2].text = $"습도 : {averageData.Humidity.ToString("N2")} %";
+		TextList[3].text = $"가스 : {averageData.Gas.ToString("N2")} ppm";
+		TextList[4].text = $"미세먼지 : {averageData.Dust.ToString("N2")} ㎍/㎥";
 		TextList[5].text = $"위험 여부 : {averageData.DangerCode}"; // (임시) 위험코드에 따른 위험 텍스트 함수 제작 예정
 
 
