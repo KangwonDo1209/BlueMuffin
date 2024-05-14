@@ -33,17 +33,30 @@ public class InteractRoom : Singleton<InteractRoom>
 		// 리스트의 데이터 평균을 계산하여 EnvironmentData 형태로 가져옴.
 		EnvironmentData averageData = DataProcessor.CalculateDataAverage(dataList, roomIndex);
 
-		// 해당되는 데이터를 화면에 표시해줌.
-		TextList[0].text = WebManager.Instance.WebRoomSensorData.DataList.FirstOrDefault(data =>
+		// roomIndex에 해당하는 RoomSensorData 객체 불러오기
+		RoomSensorData roomSensorData = WebManager.Instance.WebRoomSensorData.DataList.FirstOrDefault(data =>
 		{
 			return data.RoomIndex == roomIndex;
-		}).RoomName;
+		});
+
+		// RoomSensorData의 센서코드 해석
+		bool[] parseCode = roomSensorData.ParseSensorCode();
+
+		// 해석한 코드에 따라 데이터 텍스트 GameObject 활성화/비활성화
+		for (int i = 1; i <= 4; i++)
+		{
+			TextList[i].gameObject.SetActive(parseCode[i - 1]);
+		}
+
+
+		// 데이터 텍스트 변경
+		TextList[0].text = roomSensorData.RoomName;
 		TextList[1].text = $"온도 : {averageData.Temperature.ToString("N2")} °C";
 		TextList[2].text = $"습도 : {averageData.Humidity.ToString("N2")} %";
 		TextList[3].text = $"가스 : {averageData.Gas.ToString("N2")} ppm";
 		TextList[4].text = $"미세먼지 : {averageData.Dust.ToString("N2")} ㎍/㎥";
-		TextList[5].text = $"위험 여부 : {averageData.DangerCode}"; // (임시) 위험코드에 따른 위험 텍스트 함수 제작 예정
-
+		// TextList[5].text = $"위험 여부 : {averageData.DangerCode}"; // (임시) 위험코드에 따른 위험 텍스트 함수 제작 예정
+		TextList[5].text = $"최근 {RecentMinute.ToString()}분 평균";
 
 
 	}

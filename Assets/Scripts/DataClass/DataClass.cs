@@ -1,13 +1,4 @@
-using UnityEditor.PackageManager.Requests;
 using System;
-public class TempData // 테스트용 클래스
-{
-	public int postId;
-	public int id;
-	public string name;
-	public string email;
-	public string body;
-}
 
 public class EnvironmentData
 {
@@ -43,6 +34,17 @@ public class RoomSensorData
 	public string SensorCode;
 
 	// 센서 코드 해석 메소드
+	public bool[] ParseSensorCode()
+	{
+		int n = SensorCode.Length;
+		bool[] parseCode = new bool[n];
+		for (int i = 0; i < n; i++)
+		{
+			parseCode[i] = SensorCode[i] == '1';
+		}
+		return parseCode;
+	}
+
 }
 
 public class AduinoRequest

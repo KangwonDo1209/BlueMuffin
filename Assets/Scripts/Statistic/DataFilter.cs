@@ -32,7 +32,7 @@ public class DataFilter : MonoBehaviour
 	}
 
 	#region 테스트용 랜덤 데이터
-	public void PeriodicRandomDat(string min_sec)    // 랜덤 데이터 생성
+	public void PeriodicRandomData(string min_sec)    // 랜덤 데이터 생성
 	{
 		int[] parse = Array.ConvertAll(min_sec.Split(" "), int.Parse);
 		int min = parse[0];
