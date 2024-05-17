@@ -30,8 +30,8 @@ public class InteractRoom : Singleton<InteractRoom>
 	{
 		// roomIndex에 해당하는 방의 최근 minute동안의 EnvironmentData를 리스트로 가져옴.
 		List<EnvironmentData> dataList = DataProcessor.GetRecentData(WebManager.Instance.WebEnviromentData.DataList, roomIndex, RecentMinute);
-		// 리스트의 데이터 평균을 계산하여 EnvironmentData 형태로 가져옴.
-		EnvironmentData averageData = DataProcessor.CalculateDataAverage(dataList, roomIndex);
+		// 리스트의 데이터의 통계값을 계산하여 EnvironmentData 형태로 가져옴.
+		EnvironmentData averageData = DataProcessor.CalculateDataMin(dataList, roomIndex);
 
 		// roomIndex에 해당하는 RoomSensorData 객체 불러오기
 		RoomSensorData roomSensorData = WebManager.Instance.WebRoomSensorData.DataList.FirstOrDefault(data =>

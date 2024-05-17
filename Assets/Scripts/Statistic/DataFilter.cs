@@ -20,10 +20,10 @@ public class DataFilter : MonoBehaviour
 		dataList = WebManager.Instance.WebEnviromentData.DataList;
 		sensorDataList = WebManager.Instance.WebRoomSensorData.DataList;
 
-		sensorDataList.Add(new RoomSensorData() { RoomIndex = 1, RoomName = "침실1", SensorCode = "1100" });
-		sensorDataList.Add(new RoomSensorData() { RoomIndex = 2, RoomName = "침실2", SensorCode = "1100" });
-		sensorDataList.Add(new RoomSensorData() { RoomIndex = 3, RoomName = "주방", SensorCode = "1111" });
-		sensorDataList.Add(new RoomSensorData() { RoomIndex = 4, RoomName = "욕실", SensorCode = "1100" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 1, RoomName = "Bedroom1", SensorCode = "1100" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 2, RoomName = "Bedroom2", SensorCode = "1100" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 3, RoomName = "Livingroom", SensorCode = "1111" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 4, RoomName = "Restroom", SensorCode = "1100" });
 	}
 
 	void Update()
@@ -31,8 +31,8 @@ public class DataFilter : MonoBehaviour
 
 	}
 
-	#region 테스트용 랜덤 데이터
-	public void PeriodicRandomData(string min_sec)    // 랜덤 데이터 생성
+	#region TestCode
+	public void PeriodicRandomData(string min_sec)
 	{
 		int[] parse = Array.ConvertAll(min_sec.Split(" "), int.Parse);
 		int min = parse[0];
@@ -58,42 +58,58 @@ public class DataFilter : MonoBehaviour
 			dataList = WebManager.Instance.WebEnviromentData.DataList;
 			for (int i = min; i >= 0; i--)
 			{
-				dataList.Add(new EnvironmentData
+				for (int roomNum = 1; roomNum <= 4; roomNum++)
 				{
-					Time = EnvironmentData.ParseTime(DateTime.Now.AddMinutes(-i)),
-					RoomId = UnityEngine.Random.Range(1, 5),
-					Temperature = (float)UnityEngine.Random.Range(5, 25),
-					Humidity = (float)UnityEngine.Random.Range(10, 80),
-					Gas = (float)UnityEngine.Random.Range(10, 60),
-					Dust = (float)UnityEngine.Random.Range(5, 60),
-					DangerCode = "0000"
-				});
+					dataList.Add(new EnvironmentData
+					{
+						Time = EnvironmentData.ParseTime(DateTime.Now.AddMinutes(-i)),
+						RoomId = roomNum,
+						Temperature = (float)UnityEngine.Random.Range(5, 25),
+						Humidity = (float)UnityEngine.Random.Range(10, 80),
+						Gas = (float)UnityEngine.Random.Range(10, 60),
+						Dust = (float)UnityEngine.Random.Range(5, 60),
+						DangerCode = "0000"
+					});
+				}
 			}
 			Debug.Log("Random!");
 			yield return new WaitForSeconds(periodSec);
 		}
-	} 
+	}
 	#endregion
 
 }
 
 public class DataProcessor
 {
-	// 리스트의 데이터 중 특정 방의 최근 데이터 필터링 후 반환
+	// 최근 minute 데이터 불러오기
 	public static List<EnvironmentData> GetRecentData(List<EnvironmentData> dataList, int roomIndex, int minute)
 	{
 		DateTime currentTime = DateTime.Now;
 
 		List<EnvironmentData> recentData = dataList.Where(data =>
 		{
-			// 시간차 확인 후 
 			TimeSpan timeDiff = currentTime - EnvironmentData.ParseTime(data.Time);
 			return (timeDiff.TotalMinutes) <= minute && data.RoomId == roomIndex;
 		}).ToList();
 
 		return recentData;
 	}
-	// 리스트의 특정 속성 평균값을 반환.
+	// start부터 end까지의 데이터 리스트 불러오기
+	public static List<EnvironmentData> GetRangeData(List<EnvironmentData> dataList, int roomIndex, int start, int end)
+	{
+		DateTime currentTime = DateTime.Now;
+
+		List<EnvironmentData> rangeData = dataList.Where(data =>
+		{
+			TimeSpan timeDiff = currentTime - EnvironmentData.ParseTime(data.Time);
+			return (timeDiff.TotalMinutes) <= start && (timeDiff.TotalMinutes) >= end
+			&& data.RoomId == roomIndex;
+		}).ToList();
+
+		return rangeData;
+	}
+
 	public static EnvironmentData CalculateDataAverage(List<EnvironmentData> dataList, int roomIndex)
 	{
 		if (dataList.Count == 0)
@@ -117,19 +133,79 @@ public class DataProcessor
 		float averageGas = totalGas / count;
 		float averageDust = totalDust / count;
 
-		// 표시를 위한 최근 평균 데이터
 		EnvironmentData averageData = new EnvironmentData
 		{
-			Time = "Average", // 임시
-			RoomId = roomIndex, // 입력값으로 받은 번호
+			Time = "Average",
+			RoomId = roomIndex,
 			Temperature = averageTemperature,
 			Humidity = averageHumidity,
 			Gas = averageGas,
 			Dust = averageDust,
-			DangerCode = "0000" // 임시
+			DangerCode = "0000"
 		};
-
 		return averageData;
+	}
+	public static EnvironmentData CalculateDataMax(List<EnvironmentData> dataList, int roomIndex)
+	{
+		if (dataList.Count == 0)
+			return new EnvironmentData();
+
+		float MaxTemperature = -500;
+		float MaxHumidity = 0;
+		float MaxGas = 0;
+		float MaxDust = 0;
+		int count = dataList.Count;
+
+		foreach (EnvironmentData data in dataList)
+		{
+			MaxTemperature = math.max(MaxTemperature, data.Temperature);
+			MaxHumidity = math.max(MaxHumidity, data.Humidity);
+			MaxGas = math.max(MaxGas, data.Gas);
+			MaxDust = math.max(MaxDust, data.Dust);
+		}
+
+		EnvironmentData MaxData = new EnvironmentData
+		{
+			Time = "Max",
+			RoomId = roomIndex,
+			Temperature = MaxTemperature,
+			Humidity = MaxHumidity,
+			Gas = MaxGas,
+			Dust = MaxDust,
+			DangerCode = "0000"
+		};
+		return MaxData;
+	}
+	public static EnvironmentData CalculateDataMin(List<EnvironmentData> dataList, int roomIndex)
+	{
+		if (dataList.Count == 0)
+			return new EnvironmentData();
+
+		float MinTemperature = 10000;
+		float MinHumidity = 10000;
+		float MinGas = 10000;
+		float MinDust = 10000;
+		int count = dataList.Count;
+
+		foreach (EnvironmentData data in dataList)
+		{
+			MinTemperature = math.min(MinTemperature, data.Temperature);
+			MinHumidity = math.min(MinHumidity, data.Humidity);
+			MinGas = math.min(MinGas, data.Gas);
+			MinDust = math.min(MinDust, data.Dust);
+		}
+
+		EnvironmentData MinData = new EnvironmentData
+		{
+			Time = "Max",
+			RoomId = roomIndex,
+			Temperature = MinTemperature,
+			Humidity = MinHumidity,
+			Gas = MinGas,
+			Dust = MinDust,
+			DangerCode = "0000"
+		};
+		return MinData;
 	}
 
 
