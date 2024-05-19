@@ -34,10 +34,7 @@ public class InteractRoom : Singleton<InteractRoom>
 		EnvironmentData averageData = DataProcessor.CalculateDataMin(dataList, roomIndex);
 
 		// roomIndex에 해당하는 RoomSensorData 객체 불러오기
-		RoomSensorData roomSensorData = WebManager.Instance.WebRoomSensorData.DataList.FirstOrDefault(data =>
-		{
-			return data.RoomIndex == roomIndex;
-		});
+		RoomSensorData roomSensorData = RoomSensorData.SearchDataByIndex(WebManager.Instance.WebRoomSensorData.DataList, roomIndex);
 
 		// RoomSensorData의 센서코드 해석
 		bool[] parseCode = roomSensorData.ParseSensorCode();

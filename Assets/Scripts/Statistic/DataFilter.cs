@@ -109,7 +109,20 @@ public class DataProcessor
 
 		return rangeData;
 	}
-
+	public static EnvironmentData CalculateByIndex(List<EnvironmentData> dataList, int roomIndex, int index)
+	{
+		switch (index)
+		{
+			case 0:
+				return CalculateDataAverage(dataList, roomIndex);
+			case 1:
+				return CalculateDataMax(dataList, roomIndex);
+			case 2:
+				return CalculateDataMin(dataList, roomIndex);
+			default:
+				return CalculateDataAverage(dataList, roomIndex); // 잘못된 index일시 평균 반환
+		}
+	}
 	public static EnvironmentData CalculateDataAverage(List<EnvironmentData> dataList, int roomIndex)
 	{
 		if (dataList.Count == 0)
@@ -207,7 +220,6 @@ public class DataProcessor
 		};
 		return MinData;
 	}
-
 
 
 }

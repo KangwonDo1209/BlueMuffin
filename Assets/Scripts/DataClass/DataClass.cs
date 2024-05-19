@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class EnvironmentData
 {
@@ -20,6 +22,22 @@ public class EnvironmentData
 	{
 		string iso9601Time = dateTime.ToString("o");
 		return iso9601Time;
+	}
+	public float GetDataByIndex(int index)
+	{
+		switch (index)
+		{
+			case 0:
+				return Temperature;
+			case 1:
+				return Humidity;
+			case 2:
+				return Gas;
+			case 3:
+				return Dust;
+			default:
+				return 0;
+		}
 	}
 	public string DataDisplay()
 	{
@@ -44,7 +62,17 @@ public class RoomSensorData
 		}
 		return parseCode;
 	}
+	// 해당 index에 해당하는 RoomSensorData 불러오기
+	public static RoomSensorData SearchDataByIndex(List<RoomSensorData> dataList, int index)
+	{
+		RoomSensorData roomSensorData = dataList.FirstOrDefault(data =>
+		{
+			return data.RoomIndex == index;
+		});
+		return roomSensorData;
+	}
 
+	
 }
 
 public class AduinoRequest
