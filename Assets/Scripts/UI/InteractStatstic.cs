@@ -79,17 +79,14 @@ public class InteractStatstic : Singleton<InteractStatstic>
 			return;
 		// info 변경
 		info = infoInput;
-		// InfoText 변경
-		string t = InfoButtonTextList[info].text;
-		ChangeText(InfoText, t);
+
 	}
 	// 통계 종류 선택 (평균/최대값/최소값)
 	public void SelectStat()
 	{
 		// stat 변경
 		stat = StatDropDown.value;
-		string t = StatDropDown.options[stat].text;
-		ChangeText(StatText, t);
+
 	}
 	//  데이터 범위 시간 입력 (단위 : 분)
 	public bool InputTimeRange()
@@ -121,6 +118,13 @@ public class InteractStatstic : Singleton<InteractStatstic>
 			return;
 		if (!CanFilterData())
 			return;
+
+		// InfoText 변경
+		string i = InfoButtonTextList[info].text;
+		ChangeText(InfoText, i);
+		// StatText 변경
+		string st = StatDropDown.options[stat].text;
+		ChangeText(StatText, st);
 
 		// 방 개수 불러오기
 		RoomCount = WebManager.Instance.WebRoomSensorData.DataList.Count;

@@ -7314,8 +7314,8 @@ MonoBehaviour:
   periodSec: 5
   urlField: {fileID: 2143468747}
   url: 
-  EnviromentDataPath: 
-  SensorDataPath: 
+  EnviromentDataPath: /data.php
+  SensorDataPath: /startdata.php
 --- !u!1 &1232771034
 GameObject:
   m_ObjectHideFlags: 0

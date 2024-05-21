@@ -18,8 +18,6 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 	public TMP_InputField urlField;
 	[SerializeField]
 	private string url;
-	private string EnviromentDataUrl;
-	private string SensorDataUrl;
 	public string EnviromentDataPath;
 	public string SensorDataPath;
 
@@ -31,7 +29,7 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 
 		LoadURL();
 	}
-
+	// 기존의 Request 코루틴 제거 및 재시작
 	public void LoadURL()
 	{
 		StopGenerateCouroutine();
@@ -48,14 +46,8 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 		url = urlField.text;    // 입력 URL
 		AppManager.Instance.SaveUrl(url);
 
-		// 세부 경로 설정
-		EnviromentDataUrl = url + EnviromentDataUrl;
-		SensorDataUrl = url + SensorDataUrl;
-
 		LoadURL();
 		// 데이터 요청
-		//StartCoroutine(WebEnviromentData.Request(EnviromentDataUrl));
-		//StartCoroutine(WebRoomSensorData.Request(SensorDataUrl));
 	}
 
 	public void DebugAllData() // 데이터 출력 디버깅용 메소드
@@ -87,8 +79,8 @@ public class WebManager : Chapter.Singleton.Singleton<WebManager>
 	{
 		while (true)
 		{
-			StartCoroutine(WebEnviromentData.Request(EnviromentDataUrl));
-			StartCoroutine(WebRoomSensorData.Request(SensorDataUrl));
+			StartCoroutine(WebEnviromentData.Request(url + EnviromentDataPath));
+			StartCoroutine(WebRoomSensorData.Request(url + SensorDataPath));
 			Debug.Log("Load!");
 			yield return new WaitForSeconds(period);
 		}
