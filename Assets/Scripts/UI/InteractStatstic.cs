@@ -10,18 +10,21 @@ using System;
 public class InteractStatstic : Singleton<InteractStatstic>
 {
 	#region 변수 정의
-	public int minuteRangeStart;
-	public int minuteRangeEnd;
+	public DateTime RangeStart;
+	public DateTime RangeEnd;
 	public int info;
 	public int stat;
 	private int RoomCount;
+
+	private string[] formats = { "yyyy-MM-dd HH:mm:ss", "dd-MM-yyyy HH:mm:ss" };
+
 	[SerializeField]
 	private TMP_Text InfoText;
 	[SerializeField]
 	private TMP_Text StatText;
 
-	public TMP_InputField FilterMinuteStartField;
-	public TMP_InputField FilterMinuteEndField;
+	public TMP_InputField FilterStartField;
+	public TMP_InputField FilterEndField;
 	public TMP_Dropdown StatDropDown;
 
 	// 통계량/이름 통합 오브젝트
@@ -41,8 +44,6 @@ public class InteractStatstic : Singleton<InteractStatstic>
 	public override void Awake()
 	{
 		base.Awake();
-
-
 	}
 	private void Start()
 	{
@@ -65,7 +66,7 @@ public class InteractStatstic : Singleton<InteractStatstic>
 	}
 	public bool CanFilterData()
 	{
-		return validationRange(info, 0, 3) && validationRange(stat, 0, 2) && minuteRangeStart >= minuteRangeEnd;
+		return validationRange(info, 0, 3) && validationRange(stat, 0, 2);
 	}
 	#endregion
 
@@ -91,17 +92,31 @@ public class InteractStatstic : Singleton<InteractStatstic>
 	//  데이터 범위 시간 입력 (단위 : 분)
 	public bool InputTimeRange()
 	{
-		int start, end;
+		string start = FilterStartField.text;
+		string end = FilterEndField.text;
 		// 입력값 불러오기 / 유효성 검사
-		if (!int.TryParse(FilterMinuteStartField.text, out start))
-			return false;
-		if (!int.TryParse(FilterMinuteEndField.text, out end))
-			return false;
+		(DateTime, bool) startParse = StringToDateTime(start);
+		(DateTime, bool) endParse = StringToDateTime(end);
 
-		// MinuteRange 변경
-		minuteRangeStart = start;
-		minuteRangeEnd = end;
+		if (!(startParse.Item2 && endParse.Item2)) // 둘중 하나라도 정상적인 변환이 이루어지지 않을시 리턴
+			return false;
+		// Debug.Log("시간변환 완료");
+		RangeStart = startParse.Item1;
+		RangeEnd = endParse.Item1;
 		return true;
+	}
+	public (DateTime, bool) StringToDateTime(string input)
+	{
+		if (DateTime.TryParseExact(input, formats, null, System.Globalization.DateTimeStyles.None, out DateTime dateTimeValue))
+		{
+			// 변환 성공
+			return (dateTimeValue, true);
+		}
+		else
+		{
+			// 변환 실패
+			return (DateTime.MinValue, false);
+		}
 	}
 	#endregion
 
@@ -142,7 +157,7 @@ public class InteractStatstic : Singleton<InteractStatstic>
 				continue;
 
 			// 시간
-			List<EnvironmentData> dataList = DataProcessor.GetRangeData(WebManager.Instance.WebEnviromentData.DataList, roomIndex, minuteRangeStart, minuteRangeEnd);
+			List<EnvironmentData> dataList = DataProcessor.GetRangeData(WebManager.Instance.WebEnviromentData.DataList, roomIndex, RangeStart, RangeEnd);
 			// 통계 종류
 			EnvironmentData data = DataProcessor.CalculateByIndex(dataList, roomIndex, stat);
 			// 데이터 종류

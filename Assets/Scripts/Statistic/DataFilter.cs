@@ -20,10 +20,10 @@ public class DataFilter : MonoBehaviour
 		dataList = WebManager.Instance.WebEnviromentData.DataList;
 		sensorDataList = WebManager.Instance.WebRoomSensorData.DataList;
 
-		//sensorDataList.Add(new RoomSensorData() { RoomIndex = 1, RoomName = "Bedroom1", SensorCode = "1100" });
-		//sensorDataList.Add(new RoomSensorData() { RoomIndex = 2, RoomName = "Bedroom2", SensorCode = "1100" });
-		//sensorDataList.Add(new RoomSensorData() { RoomIndex = 3, RoomName = "Livingroom", SensorCode = "1111" });
-		//sensorDataList.Add(new RoomSensorData() { RoomIndex = 4, RoomName = "Restroom", SensorCode = "1100" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 1, RoomName = "Bedroom1", SensorCode = "1100" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 2, RoomName = "Bedroom2", SensorCode = "1100" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 3, RoomName = "Livingroom", SensorCode = "1111" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 4, RoomName = "Restroom", SensorCode = "1100" });
 	}
 
 	void Update()
@@ -95,16 +95,20 @@ public class DataProcessor
 
 		return recentData;
 	}
-	// start부터 end까지의 데이터 리스트 불러오기
-	public static List<EnvironmentData> GetRangeData(List<EnvironmentData> dataList, int roomIndex, int start, int end)
+	public static List<DateTime> FilterDateTimes(List<DateTime> dateTimes, DateTime start, DateTime end)
 	{
-		DateTime currentTime = DateTime.Now;
+		// LINQ를 사용하여 start와 end 사이의 값만 필터링
+		return dateTimes.Where(dt => dt >= start && dt <= end).ToList();
+	}
+
+	// start부터 end까지의 데이터 리스트 불러오기
+	public static List<EnvironmentData> GetRangeData(List<EnvironmentData> dataList, int roomIndex, DateTime start, DateTime end)
+	{
 
 		List<EnvironmentData> rangeData = dataList.Where(data =>
 		{
-			TimeSpan timeDiff = currentTime - EnvironmentData.ParseTime(data.Time);
-			return (timeDiff.TotalMinutes) <= start && (timeDiff.TotalMinutes) >= end
-			&& data.RoomId == roomIndex;
+			DateTime dt = EnvironmentData.ParseTime(data.Time);
+			return (dt >= start && dt <= end) && data.RoomId == roomIndex;
 		}).ToList();
 
 		return rangeData;

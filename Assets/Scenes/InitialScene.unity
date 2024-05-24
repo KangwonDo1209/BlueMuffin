@@ -1282,14 +1282,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f62b3039dcc7d428706e8c72671714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minuteRangeStart: 0
-  minuteRangeEnd: 0
   info: 0
   stat: 0
   InfoText: {fileID: 2002102107}
   StatText: {fileID: 75103638}
-  FilterMinuteStartField: {fileID: 778106605}
-  FilterMinuteEndField: {fileID: 695998967}
+  FilterStartField: {fileID: 778106605}
+  FilterEndField: {fileID: 695998967}
   StatDropDown: {fileID: 305606298}
   StatObjectList:
   - {fileID: 1820224454}
@@ -4352,7 +4350,7 @@ GameObject:
   - component: {fileID: 695998968}
   - component: {fileID: 695998967}
   m_Layer: 5
-  m_Name: FilterMinuteEndField
+  m_Name: FilterEndField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4377,7 +4375,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -140, y: 0}
-  m_SizeDelta: {x: 200, y: 60}
+  m_SizeDelta: {x: 400, y: 60}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &695998967
 MonoBehaviour:
@@ -4784,7 +4782,7 @@ GameObject:
   - component: {fileID: 778106606}
   - component: {fileID: 778106605}
   m_Layer: 5
-  m_Name: FilterMinuteStartField
+  m_Name: FilterStartField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4808,8 +4806,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -380, y: 0}
-  m_SizeDelta: {x: 200, y: 60}
+  m_AnchoredPosition: {x: -580, y: 0}
+  m_SizeDelta: {x: 400, y: 60}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &778106605
 MonoBehaviour:
@@ -7061,11 +7059,11 @@ RectTransform:
   m_Father: {fileID: 1755450600}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -380}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 40}
   m_SizeDelta: {x: 400, y: 80}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1174924997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10024,7 +10022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1717510938
 RectTransform:
   m_ObjectHideFlags: 0
