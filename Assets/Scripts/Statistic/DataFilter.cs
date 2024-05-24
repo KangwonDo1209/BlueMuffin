@@ -19,11 +19,6 @@ public class DataFilter : MonoBehaviour
 	{
 		dataList = WebManager.Instance.WebEnviromentData.DataList;
 		sensorDataList = WebManager.Instance.WebRoomSensorData.DataList;
-
-		sensorDataList.Add(new RoomSensorData() { RoomIndex = 1, RoomName = "Bedroom1", SensorCode = "1100" });
-		sensorDataList.Add(new RoomSensorData() { RoomIndex = 2, RoomName = "Bedroom2", SensorCode = "1100" });
-		sensorDataList.Add(new RoomSensorData() { RoomIndex = 3, RoomName = "Livingroom", SensorCode = "1111" });
-		sensorDataList.Add(new RoomSensorData() { RoomIndex = 4, RoomName = "Restroom", SensorCode = "1100" });
 	}
 
 	void Update()
@@ -52,6 +47,11 @@ public class DataFilter : MonoBehaviour
 
 	public IEnumerator RandomData(int min, int periodSec)
 	{
+		sensorDataList.Clear();
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 1, RoomName = "Bedroom1", SensorCode = "1100" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 2, RoomName = "Bedroom2", SensorCode = "1100" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 3, RoomName = "Livingroom", SensorCode = "1111" });
+		sensorDataList.Add(new RoomSensorData() { RoomIndex = 4, RoomName = "Restroom", SensorCode = "1100" });
 		while (true)
 		{
 			WebManager.Instance.WebEnviromentData.DataList = new List<EnvironmentData>();
